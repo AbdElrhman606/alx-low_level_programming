@@ -1,30 +1,51 @@
 #include "main.h"
 
 /**
- * wildcmp - Compare strings
- * @s1: pointer to string params
- * @s2: pointer to string params
- * Return: 0
+ *
+ * return the pointer past star
+ *
  */
+
+
+char *move_past_star(char *s2)
+{
+   if(*s == '*')
+	   return (move_past_star(s2 +1));
+   else
+	   return (s2);
+
+}
+
+
+int inception(char *s1, char *s2)
+{
+  int ret = 0;
+
+  if (*s1 == 0)
+	  return (0);
+  if(*s1 == *s2)
+	  ret += wildcmp(s1 + 1, s2 +1);
+  ret += inception(s1 +1, s2);
+  return(ret);
+}
 
 int wildcmp(char *s1, char *s2)
 {
-	if (*s1 == '\0')
-	{
-	if (*s2 != '\0' && *s2 == '*')
-	{
-	return (wildcmp(s1, s2 + 1));
-	}
-	return (*s2 == '\0');
-	}
+  int ret = 0;
 
-	if (*s2 == '*')
-	{
-	return (wildcmp(s1 + 1, s2) || wildcmp(s1, s2 + 1));
-	}
-	else if (*s1 == *s2)
-	{
-	return (wildcmp(s1 + 1, s2 + 1));
-	}
-	return (0);
+  if( !*s1 && *s2 == '*' && !*move_past_star(2))
+	  return (1);
+  if(*s1 == *s2)
+  {
+     if(!*s2)
+	     return (1);
+     if(*s1 == *s2)
+	     ret += wildcmp(s1 +1, s2+ 1);
+     ret += inception(s1, s2);
+     return (!!ret);
+
+
+  }
+   return(0);
+
 }
